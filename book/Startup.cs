@@ -58,6 +58,21 @@ namespace book
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
+                    name: "catpage",
+                    pattern: "bookCat/page{pageNum}",
+                    defaults: new { Controller = "Home", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                    name: "Paging",
+                    pattern: "page{pageNum}",
+                    defaults: new { Controller = "Home", action = "Index" });
+
+                endpoints.MapControllerRoute(
+                    name: "cat",
+                    pattern: "{bookCat}",
+                    defaults: new { Controller = "Home", action = "Index", pageNum = 1 });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
