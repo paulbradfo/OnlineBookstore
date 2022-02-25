@@ -33,6 +33,12 @@ namespace book
             });
 
             services.AddScoped<IbookRepository, EFbookRepository>();
+
+            services.AddRazorPages();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +55,10 @@ namespace book
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
+            app.UseSession();
 
             app.UseRouting();
 
@@ -59,13 +68,13 @@ namespace book
             {
                 endpoints.MapControllerRoute(
                     name: "catpage",
-                    pattern: "bookCat/page{pageNum}",
+                    pattern: "{bookCat}/page{pageNum}",
                     defaults: new { Controller = "Home", action = "Index" });
 
                 endpoints.MapControllerRoute(
                     name: "Paging",
                     pattern: "page{pageNum}",
-                    defaults: new { Controller = "Home", action = "Index" });
+                    defaults: new { Controller = "Home", action = "Index", pageNum = 1 });
 
                 endpoints.MapControllerRoute(
                     name: "cat",
@@ -75,6 +84,8 @@ namespace book
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapRazorPages();
             });
         }
     }

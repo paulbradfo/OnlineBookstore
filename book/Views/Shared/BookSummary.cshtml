@@ -3,13 +3,47 @@
 
 @model Books
 
-        <div class="card">
+<div class="card m-2 p-2">
 
-            <div class="p-3">
+    <div class="p-3">
 
-                <h3>@Model.Title</h3>
+        <h3>@Model.Title</h3>
+        <p class="text-muted">By @Model.Author</p>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Category: @Model.Category</li>
+            <li class="list-group-item">Number of Pages: @Model.PageCount</li>
+            <li class="list-group-item">Publisher: @Model.Publisher</li>
+            <li class="list-group-item">Price: $@Model.Price</li>
+            <li class="list-group-item">ISBN Number: @Model.Isbn</li>
+        </ul>
+
+        <form method="post" asp-page="/Cart">
+
+            <input type="hidden" asp-for="@Model.BookId" />
+
+            <input type="hidden" name="returnURL" value="@ViewContext.HttpContext.Request.PathAndQuery()" />
+
+            <span class="card-text">
+                <button type="submit" class="btn btn-primary float-end">Add to Cart</button>
+            </span>
+
+        </form>
+
+    </div>
+
+</div><br />
+
+@*<div class="container table">
+
+        <div class="row border-top border-dark">
+
+            <div class="col">
+                <br /><h3>@Model.Title</h3>
                 <p class="text-muted">By @Model.Author</p>
+            </div>
 
+            <div class="col">
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">Category: @Model.Category</li>
                     <li class="list-group-item">Number of Pages: @Model.PageCount</li>
@@ -17,32 +51,8 @@
                     <li class="list-group-item">Price: $@Model.Price</li>
                     <li class="list-group-item">ISBN Number: @Model.Isbn</li>
                 </ul>
+            </div><br />
 
-            </div>
-
-            
-
-        </div><br />
-
-@*<div class="container table">
-
-    <div class="row border-top border-dark">
-
-        <div class="col">
-            <br /><h3>@Model.Title</h3>
-            <p class="text-muted">By @Model.Author</p>
         </div>
 
-        <div class="col">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">Category: @Model.Category</li>
-                <li class="list-group-item">Number of Pages: @Model.PageCount</li>
-                <li class="list-group-item">Publisher: @Model.Publisher</li>
-                <li class="list-group-item">Price: $@Model.Price</li>
-                <li class="list-group-item">ISBN Number: @Model.Isbn</li>
-            </ul>
-        </div><br />
-
-    </div>
-
-</div>*@
+    </div>*@
