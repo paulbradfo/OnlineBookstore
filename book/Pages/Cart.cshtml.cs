@@ -13,33 +13,35 @@ namespace book.Pages
     {
         private IbookRepository repo { get; set; }
 
-        public CartModel(IbookRepository temp)
-        {
-            repo = temp;
-        }
-
         public ShopCart cart { get; set; }
 
         public string ReturnUrl { get; set; }
 
+        public CartModel(IbookRepository temp, ShopCart c)
+        {
+            repo = temp;
+            cart = c;
+        }   
+
         public void OnGet(string returnUrl)
         {
             ReturnUrl = returnUrl ?? "/";
-
-            cart = HttpContext.Session.GetJson<ShopCart>("cart") ?? new ShopCart(); ;
         }
 
         public IActionResult OnPost(int bookId, string returnUrl)
         {
             Books b = repo.Books.FirstOrDefault(x => x.BookId == bookId);
 
-            cart = HttpContext.Session.GetJson<ShopCart>("cart") ?? new ShopCart();
-
             cart.AddItem(b, 1);
 
-            HttpContext.Session.SetJson("cart", cart);
-
             return RedirectToPage( new { ReturnUrl = returnUrl });
+        }
+
+        public IActionResult OnPostRemove(int bookId, string returnUrl)
+        {
+            cart.RemoveItem(cart.Items.First(x => x.Book.BookId == bookId).Book);
+
+            return RedirectToPage(new { ReturnUrl = returnUrl });
         }
     }
 }

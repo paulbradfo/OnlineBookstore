@@ -20,5 +20,7 @@ namespace book.Models
         }
 
         public DbSet<Books> Books { get; set; }
+
+        public DbSet<CustInfo> Cust { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 @{
 }
 
-<h2 class="text-center">My Cart</h2>
+<h2 class="text-center">My Cart</h2><br />
 
 <table class="table table-bordered table-striped">
 
@@ -27,6 +27,20 @@
                 <td>@i.Quantity</td>
                 <td>$@i.Book.Price</td>
                 <td>@((i.Quantity * i.Book.Price).ToString("c"))</td>
+
+                <td class="text-center">
+
+                    <form method="post" asp-page-handler="Remove">
+
+                        <input type="hidden" name="bookId" value="@i.Book.BookId" />
+                        
+                        <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
+
+                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+
+                    </form>
+
+                </td>
             </tr>
         }
 
@@ -39,8 +53,10 @@
         </tr>
     </tfoot>
 
-</table>
+</table><br />
 
 <div class="text-center">
-    <a class="btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+    <a class="m-1 btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
+
+    <a class="m-1 btn btn-primary" asp-controller="Cust" asp-action="Checkout">Checkout</a>
 </div>
