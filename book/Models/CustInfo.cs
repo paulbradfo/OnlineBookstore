@@ -38,6 +38,9 @@ namespace book.Models
         [Required(ErrorMessage = "Please Enter the Country")]
         public string Country { get; set; }
 
+        [BindNever]
+        public bool OrderPlaced { get; set; }
+
         //[Required(ErrorMessage = "Please Select How you would like your Product to be Shipped")]
         //public string Shipping { get; set; }
 

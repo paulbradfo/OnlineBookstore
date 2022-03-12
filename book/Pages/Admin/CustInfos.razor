@@ -1,0 +1,44 @@
+﻿@page "/admin/custinfo"
+@inherits OwningComponentBase<ICustRepository>
+
+<CustInfoTable TableTitle="Unshipped Orders" Orders="UnshippedOrders" ButtonLabel="Shipped" OrderSelected="PlaceOrder"></CustInfoTable><br />
+
+<CustInfoTable TableTitle="Shipped Orders" Orders="ShippedOrders" ButtonLabel="Reset" OrderSelected="ResetOrder"></CustInfoTable>
+
+<div class="text-center p-2 m-2">
+    <button class="btn btn-primary" @onclick="@(x => UpdateData())">Refresh Data</button>
+</div>
+
+
+@code {
+
+    public ICustRepository repo => Service;
+
+    public IEnumerable<CustInfo> AllOrders { get; set; }
+    public IEnumerable<CustInfo> UnshippedOrders { get; set; }
+    public IEnumerable<CustInfo> ShippedOrders { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await UpdateData();
+    }
+
+    protected async Task UpdateData()
+    {
+        AllOrders = await repo.CustInfo.ToListAsync();
+        UnshippedOrders = AllOrders.Where(x => !x.OrderPlaced);
+        ShippedOrders = AllOrders.Where(x => x.OrderPlaced);
+    }
+
+    public void PlaceOrder(int id) => UpdateOrder(id, true);
+
+    public void ResetOrder(int id) => UpdateOrder(id, false);
+
+    private void UpdateOrder(int id, bool placed)
+    {
+        CustInfo d = repo.CustInfo.FirstOrDefault(x => x.CustId == id);
+        d.OrderPlaced = placed;
+        repo.SaveCust(d);
+    }
+
+}
