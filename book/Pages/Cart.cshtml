@@ -3,7 +3,12 @@
 @{
 }
 
-<h2 class="text-center">My Cart</h2><br />
+@*Here is where I added the close button from bootstrap. It puts an "X" icon at the corner of the page that brings the user back to the booklist*@
+
+<a type="button" class="btn-close float-end" aria-label="Close" href="@Model.ReturnUrl"></a>
+
+<h2 class="text-center">My Cart</h2>
+<br />
 
 <table class="table table-bordered table-striped">
 
@@ -33,7 +38,7 @@
                     <form method="post" asp-page-handler="Remove">
 
                         <input type="hidden" name="bookId" value="@i.Book.BookId" />
-                        
+
                         <input type="hidden" name="returnUrl" value="@Model.ReturnUrl" />
 
                         <button type="submit" class="btn btn-sm btn-danger">Remove</button>
@@ -53,10 +58,23 @@
         </tr>
     </tfoot>
 
-</table><br />
+</table>
+<br />
 
 <div class="text-center">
     <a class="m-1 btn btn-primary" href="@Model.ReturnUrl">Continue Shopping</a>
 
     <a class="m-1 btn btn-primary" asp-controller="Cust" asp-action="Checkout">Checkout</a>
-</div>
+</div><br /><br />
+
+@*Here is where I added the blockquote from bootstrap. It places a quote with it's accompanied author in the mdidle of the page. 
+The quote has a darker weight and the author is a light shade'*@
+
+<figure class="text-center">
+    <blockquote class="blockquote">
+        <p>"Some people believe that less is more. Me? No, I believe more is more. <br /> More books on your shelf is more money in my pocket."</p>
+    </blockquote>
+    <figcaption class="blockquote-footer">
+        Bookstore CEO, Bradford Paul
+    </figcaption>
+</figure>
